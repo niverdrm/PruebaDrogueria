@@ -1,0 +1,105 @@
+<div class="container">
+  <div class="row">
+    <h1 class="col-12 text-center">{{ titulo }}</h1>
+    <div class="col-12">
+      <form [formGroup]="formProducto" (submit)="registrarProducto()">
+        <div class="form col-12">
+          <div class="col-6">
+            <div class="form-group">
+              <label for="nombre">Nombre</label>
+              <input
+                type="text"
+                class="form-control"
+                formControlName="nombre"
+                id="nombre"
+                placeholder="nombre"
+                name="nombre"
+                required
+              />
+              <div *ngIf=" nombre?.invalid &&  (nombre?.dirty ||nombre?.touched)">
+                <p>*El campo es obligatorio*</p>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="laboratorioFabrica">Laboratorio de Fabrica</label>
+              <input
+                type="text"
+                class="form-control"
+                formControlName="laboratorioFabrica"
+                id="laboratorioFabrica"
+                name="laboratorioFabrica"
+                placeholder="ingrese el laboratorio"
+              />
+              <div *ngIf=" laboratorioFabrica?.invalid &&  (laboratorioFabrica?.dirty ||laboratorioFabrica?.touched)">
+                <p>*El campo es obligatorio*</p>
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="exampleInputPassword1">Fecha de fabricación</label>
+              <input
+                type="date"
+                class="form-control"
+                formControlName="fechaFabricacion"
+                id="fechaFabricacion"
+                name="fechaFabricacion"
+              />
+              <div *ngIf=" fechaFabricacion?.invalid &&  (fechaFabricacion?.dirty ||fechaFabricacion?.touched)">
+                <p>*El campo es obligatorio*</p>
+              </div>
+
+            </div>
+          </div>
+          <div class="col-6">
+            <div class="form-group">
+              <label for="exampleInputEmail1">Fecha de vencimiento</label>
+              <input
+                type="date"
+                class="form-control"
+                formControlName="fechaVencimiento"
+                id="fechaVencimiento"
+                name="fechaVencimiento"
+                required    
+              />
+              <div *ngIf=" fechaVencimiento?.invalid &&  (fechaVencimiento?.dirty ||fechaVencimiento?.touched)">
+                <p>*El campo es obligatorio*</p>
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="Cantidad">Cantidad en stock</label>
+              <input
+                type="number"
+                class="form-control"
+                formControlName="cantidadStock"
+                id="cantidadStock"
+                name="cantidadStock"
+                placeholder="ingrese el numero"
+                required              />
+                <div *ngIf=" cantidadStock?.invalid &&  (cantidadStock?.dirty ||cantidadStock?.touched)">
+                  <p>*El campo es obligatorio*</p>
+                </div>
+            </div>
+            <div class="form-group">
+              <label for="exampleInputPassword1">Valor unitario</label>
+              <input
+                type="number"
+                class="form-control"
+                formControlName="valorUnitario"
+                id="valorUnitario"
+                name="valorUnitario"
+                placeholder="ingrese el valor"
+                required
+              />
+              <div *ngIf=" valorUnitario?.invalid &&  (valorUnitario?.dirty ||valorUnitario?.touched)">
+                <p>*El campo es obligatorio*</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="button">
+          <button type="submit"   [disabled]="formProducto.invalid"  class="btn btn-primary">{{ titulo }}</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

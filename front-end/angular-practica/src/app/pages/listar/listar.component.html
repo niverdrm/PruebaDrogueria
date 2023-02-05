@@ -1,0 +1,42 @@
+<div class="container">
+  <div class="row">
+    <h1 class="col-12 text-center">Lista de Productos</h1>
+    <div class="col-12">
+      <table class="table">
+        <thead class="thead-dark">
+          <tr>
+            <th scope="col">#</th>
+            <th scope="col">Nombre</th>
+            <th scope="col">Fabricante</th>
+            <th scope="col">fechaFabricacion</th>
+            <th scope="col">fechaVencimiento</th>
+            <th scope="col">cantidad</th>
+            <th scope="col">valor unitario</th>
+            <th scope="col">Acciones</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let producto of productos; let i = index">
+            <th scope="row">{{ i + 1 }}</th>
+            <td>{{ producto.nombre }}</td>
+            <td>{{ producto.laboratorioFabrica }}</td>
+            <td>{{ producto.fechaFabricacion | date: 'short'}}</td>
+            <td>{{ producto.fechaVencimiento | date: 'short'}}</td>
+            <td>{{ producto.cantidadStock}}</td>
+            <td>{{ producto.valorUnitario}}</td>
+            <td>
+              <ul class="action">
+                <!-- <i (click)="emitirEmpleado(empleado)" class="fas fa-edit"></i> -->
+                <i  class="fas fa-edit"></i>
+                <i
+                  (click)="eliminarProducto(producto.id)"
+                  class="far fa-trash-alt"
+                ></i>
+              </ul>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
