@@ -1,6 +1,6 @@
 package com.example.konex.serviceImp;
 
-import java.util.Date;
+
 import java.util.List;
 import java.util.Optional;
 
@@ -66,7 +66,10 @@ public class ProductoServiceImp  implements ProductoService{
 		Producto productoNombredb = buscarPorNombre(producto.getNombre());
 
 		if (productoNombredb != null) {
-			return null;
+			
+			if(productoNombredb.getId() != id){
+					return null;
+			}
 		}
 		
 		Optional<Producto>  productoDb = productoRepository.findById(id);
