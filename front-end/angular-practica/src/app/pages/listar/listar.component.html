@@ -1,7 +1,17 @@
+
 <div class="container">
   <div class="row">
-    <h1 class="col-12 text-center">Lista de Productos</h1>
+    <form class="form-inline  col-12 search">
+      <input class="form-control mr-sm-2 justify-content-end"
+       type="search" placeholder="Search" aria-label="Search"
+       #txtSearch
+       (keyup)="buscarNombre(txtSearch.value)"
+       >
+      <!-- <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button> -->
+    </form>
+    <h1 class="col-12 text-center">Lista de Medicamentos</h1>
     <div class="col-12">
+      
       <table class="table">
         <thead class="thead-dark">
           <tr>
@@ -13,11 +23,12 @@
             <th scope="col">cantidad</th>
             <th scope="col">valor unitario</th>
             <th scope="col">Acciones</th>
+            <th scope="col">Vender</th>
           </tr>
         </thead>
         <tbody>
-          <tr *ngFor="let producto of productos; let i = index">
-            <th scope="row">{{ i + 1 }}</th>
+          <tr *ngFor="let producto of productos | paginacion:ini: nombreBuscar; let i = index">
+            <th scope="row">{{ i + 1 + ini }}</th>
             <td>{{ producto.nombre }}</td>
             <td>{{ producto.laboratorioFabrica }}</td>
             <td>{{ producto.fechaFabricacion | date: 'short'}}</td>
@@ -26,17 +37,32 @@
             <td>{{ producto.valorUnitario}}</td>
             <td>
               <ul class="action">
-                <!-- <i (click)="emitirEmpleado(empleado)" class="fas fa-edit"></i> -->
-                <i  class="fas fa-edit"></i>
+                <i (click)="emitirProducto(producto)" class="fas fa-edit"></i>
                 <i
                   (click)="eliminarProducto(producto.id)"
                   class="far fa-trash-alt"
                 ></i>
               </ul>
             </td>
+            <td><i class="fas fa-store" (click)="getProducto(producto)"></i></td>
           </tr>
         </tbody>
       </table>
+      <nav aria-label="Page navigation example">
+        <ul class="pagination justify-content-end">
+          <li class="page-item ">
+            <a class="page-link" (click)="atras()" >Atras</a>
+          </li>
+          <li class="page-item">
+            <a class="page-link" (click)="siguiente()">Siguiente</a>
+          </li>
+        </ul>
+      </nav>
     </div>
+    <app-modal
+    *ngIf="isModal"
+    (isClosed)="isupdate($event)"
+    [productoVender] ="productoVender"
+    ></app-modal>
   </div>
 </div>

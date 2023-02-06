@@ -1,0 +1,48 @@
+<div class="wrapper_alert">
+    <div class="alert_container">
+      <h4>Venta</h4>
+      <div class="datos">
+        <div class="item">
+          <label class="atributo">Nombre del Medicamento: </label>
+          <label class="valor">{{productoVender.nombre}}</label>
+        </div>
+        <div class="item">
+          <label class="atributo">Valor Unitario:</label>
+          <label class="valor">{{productoVender.valorUnitario}}</label>
+        </div>
+        <div  class="item">
+          <div class="item" >
+            <label class="atributo">Cantidad a  vender</label>
+            <input
+            #txtcantidad
+            (keyup)="calcularTotal(txtcantidad.value)"
+              class="form-control"
+              type="number"
+            />
+            
+          </div>
+        </div>
+        <div class="item" *ngIf="!isExist">
+            <p>* Disponibles  {{productoVender.cantidadStock}} o cantidad  no es validad*</p>
+        </div>
+        <div  class="item">
+          <div class="item" >
+          <label for="atributo">Total</label>
+          <label class="valor">{{total}}</label>
+          </div>
+        </div>
+  
+        <div class="alert_options">
+          <button (click)="close()">Cancelar</button>
+  
+          <button [disabled]="!isExist" (click)="vender()" type="submit">
+            vender
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+
+	
+	

@@ -7,6 +7,10 @@ export class Producto {
     cantidadStock?:number;
     valorUnitario?:number;
 
+
+    constructor(){
+         
+    }
      constructors(
         nombre:string,
         laboratorioFabrica:string,
@@ -23,4 +27,5 @@ export class Producto {
         this.valorUnitario=    valorUnitario;
         
      }
+      
 }

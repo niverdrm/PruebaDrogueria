@@ -19,16 +19,25 @@ export class ProductoService {
     }
 
 
-   registrarProducto(producto: Producto) {
+  registrarProducto(producto: Producto) {
+    console.log(producto, 'coma mierda no sirve');
     return  this.http
       .post(`${base_url}/guardar_producto`, producto).pipe(res =>  res)
   }
-   listaProductos() {
+
+  listaProductos() {
     return  this.http
       .get(`${base_url}/productos`).pipe(res =>  res)
   }
-   eliminarProductos(id?:number) {
+
+  eliminarProductos(id?:number) {
     return  this.http
       .delete(`${base_url}/eliminar?id=${id}`).pipe(res =>  res)
   }
+
+  editarProductos( id:number, producto: Producto) {
+    return  this.http
+      .put(`${base_url}/actualizar?id=${id}`, producto).pipe(res =>  res)
+  }
+
 }

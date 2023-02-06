@@ -12,7 +12,11 @@ import Swal from 'sweetalert2';
   styleUrls: ['./listar.component.css'],
 })
 export class ListarComponent implements OnInit {
-  productos: Producto[] ;
+  public productos: Producto[] ;
+  public ini :number;
+  public nombreBuscar:string;
+  public isModal:boolean;
+  public productoVender:Producto;
 
   constructor(
 
@@ -20,26 +24,24 @@ export class ListarComponent implements OnInit {
     private productoService :ProductoService,
     private router: Router
   ) {
-    // this.listarEmpleados();
     this.productos =[];
+    this.ini=0;
+    this.nombreBuscar ='';
+    this.isModal =false;
+    this.productoVender =new Producto();
   }
 
   ngOnInit(): void {
     this.listarProductos();
+    // this.actualizar();
   }
 
-  async listarEmpleados() {
-  //   const resp: any = await this.empleadoService.listarEmpleados();
-  //   this.empleados = resp.data;
-  //   // resp.ok
-  //   //   ? Swal.fire(resp.msg, '', 'success')
-  //   //   : Swal.fire(resp.msg, '', 'error');
-  }
  
   listarProductos(){
    this.productoService.listaProductos().subscribe((res:any) =>{
       if(res.data.length){
         this.productos = res.data;
+        console.log('estoy actualizando');
         console.log(this.productos);
       }
    })
@@ -54,7 +56,7 @@ export class ListarComponent implements OnInit {
       showCancelButton: true,
       confirmButtonColor: '#3085d6',
       cancelButtonColor: '#d33',
-      confirmButtonText: 'Yes, delete it!'
+      confirmButtonText: 'si , Borrar!'
     }).then((result) => {
       if (result.isConfirmed) {
         Swal.fire(
@@ -73,29 +75,39 @@ export class ListarComponent implements OnInit {
       }
     })
 
-
-
-
-
-
-    // this.productoService.eliminarProductos(id).subscribe((res:any) =>{
-    //   if(res.ok){
-
-
-        
-    //     Swal.fire(res.msg, '', 'success');
-    //     this.listarProductos;
-    //   }else{
-    //     Swal.fire('No pudo ser Eliminado', '', 'error');
-    //   }
-    // })
   }
 
-  
 
-  emitirEmpleado(empleado: any) {
+
+   emitirProducto(producto: Producto) {
     this.router.navigateByUrl('home');
-    this.empleadoService.titulo = 'Editar';
-    this.empleadoService.empleado = empleado;
+    this.productoService.titulo = 'Editar';
+    this.productoService.producto = producto;
+  }
+
+
+  buscarNombre(value:string){
+ this.nombreBuscar = value;
+  }
+
+  siguiente(){
+    this.ini =this.ini + 5;
+  }
+
+  atras(){
+    if(this.ini > 0) this.ini = this.ini - 5;
+  }
+
+
+
+  isupdate(active: boolean) {
+    this.isModal = false;
+    this.listarProductos();
+     this.productoService.listaProductos().subscribe((res:any) =>this.productos = res.data)
+  }
+
+  getProducto(producto:Producto){
+    this.productoVender = producto;
+    this.isModal = true;
   }
 }

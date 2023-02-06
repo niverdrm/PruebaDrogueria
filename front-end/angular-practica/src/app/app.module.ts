@@ -9,6 +9,10 @@ import { NavComponent } from './components/nav/nav.component';
 import { RouterModule } from '@angular/router';
 import { FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
+import { PaginacionPipe } from './pipes/paginacion.pipe';
+import { ModalComponent } from './components/modal/modal.component';
+import { VentasComponent } from './pages/ventas/ventas.component';
+import { PagventasPipe } from './pipes/pagventas.pipe';
 
 @NgModule({
   declarations: [
@@ -16,6 +20,10 @@ import { HttpClientModule } from '@angular/common/http';
     ResgistrarComponent,
     ListarComponent,
     NavComponent,
+    PaginacionPipe,
+    ModalComponent,
+    VentasComponent,
+    PagventasPipe,
   ],
   imports: [
     BrowserModule,

@@ -1,0 +1,61 @@
+<div class="container">
+    <div class="row">
+      <form class="form-inline  col-12 search">
+        <label class="mr-sm-2"> Desde:</label>
+        <input class="form-control mr-sm-3 justify-content-end"
+         type="date" placeholder="Search" aria-label="Search"
+         #txtDesde
+         >
+         <label class="mr-sm-2">Hasta:</label>
+        <input class="form-control mr-sm-2 justify-content-end"
+         type="date" placeholder="Search" aria-label="Search"
+         #txtHasta
+         
+         >
+        <button class="btn btn-outline-danger  mr-sm-2" type="submit" (click)="consultar(txtDesde.value, txtHasta.value)">Consultar</button>
+        <button class="btn btn-outline-danger  mr-sm-2" type="submit" (click)="quitarFilter()">Quitar Filtro</button>
+      </form>
+      <h1 class="col-12 text-center">Lista de Ventas</h1>
+      <div class="col-12">
+        
+        <table class="table" *ngIf="ventas.length > 0">
+          <thead class="thead-dark">
+            <tr>
+              <th scope="col">#</th>
+              <th scope="col">Medicamento</th>
+              <th scope="col">fecha de venta</th>
+              <th scope="col">Cantidad</th>
+              <th scope="col">Valor Total</th>
+              <th scope="col">Valor Unitario</th>
+              <th scope="col">idProducto</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let venta of ventas | pagventas: ini ; let i = index">
+              <th scope="row">{{ i + 1 +ini }}</th>
+              <td>{{ venta.medicamento }}</td>
+              <td>{{ venta.fechaHora | date : 'medium'}}</td>
+              <td>{{ venta.cantidad}}</td>
+              <td>{{ venta.valorTotal}}</td>
+              <td>{{ venta.valorUnitario}}</td>
+              <td>{{ venta.idProducto}}</td>
+            </tr>
+          </tbody>
+        </table>
+        <div *ngIf="ventas.length === 0">
+          <h4>{{msg}}</h4>
+        </div>
+        <nav aria-label="Page navigation example">
+          <ul class="pagination justify-content-end">
+            <li class="page-item ">
+              <a class="page-link" (click)="atras()" >Atras</a>
+            </li>
+            <li class="page-item">
+              <a class="page-link" (click)="siguiente()">Siguiente</a>
+            </li>
+          </ul>
+        </nav>
+      </div>
+    
+    </div>
+  </div>

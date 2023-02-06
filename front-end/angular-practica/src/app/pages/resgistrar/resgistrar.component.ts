@@ -17,14 +17,13 @@ export class ResgistrarComponent implements OnInit {
   fecha:Date;
 
   constructor(
-    private empleadoService: EmpleadoServiceService,
     private router: Router,
     private prodcutoService: ProductoService
   ) {
     this.formProducto = this.createFormProducto();
-    // this.cargarEmpleado();
     this.fecha = new Date;
     this.producto = new Producto();
+
   }
   createFormProducto(): FormGroup {
     return new FormGroup({
@@ -36,7 +35,10 @@ export class ResgistrarComponent implements OnInit {
       valorUnitario: new FormControl('', Validators.required),
     });
   }
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.cargarProducto();
+    console.log('holaaaaaaaaaaaaa');
+  }
    
    registrarProducto(){
     this.producto = this.formProducto.value;
@@ -45,7 +47,6 @@ export class ResgistrarComponent implements OnInit {
      if( res.ok){
        Swal.fire(res.msg, '', 'success')
        this.router.navigateByUrl('listar');
-
      }else{
        Swal.fire(res.msg, '', 'error');
      } 
@@ -53,42 +54,22 @@ export class ResgistrarComponent implements OnInit {
 
    }
 
-  // async cargarEmpleado() {
-  //   this.titulo = this.empleadoService.titulo || 'Registrar';
-  //   if (this.empleadoService.empleado) {
-  //     const {
-  //       nombre, 
-  //       laboratorioFabrica,
-  //       fechaFabricacion,
-  //       fechaVencimiento,
-  //       cantidadStock,
-  //       valorUnitario, } =
-  //       this.empleadoService.empleado;
-  //     this.formProducto.setValue({
-  //       nombre, 
-  //       laboratorioFabrica,
-  //       fechaFabricacion,
-  //       fechaVencimiento,
-  //       cantidadStock,
-  //       valorUnitario
-  //     });
-  //     this.producto= this.formProducto;
-  //   }
-  // }
 
-
-
-   async cargarProducto() {
+    cargarProducto() {
       this.titulo = this.prodcutoService.titulo || 'Registrar';
-      if (this.empleadoService.empleado) {
+      console.log(this.titulo, this.prodcutoService.producto.id);
+      if(this.titulo === 'Registrar'){
+        this.formProducto.reset();
+      }
+      if (this.prodcutoService.producto.id) {
         const {
           nombre, 
           laboratorioFabrica,
           fechaFabricacion,
           fechaVencimiento,
           cantidadStock,
-          valorUnitario, } =
-          this.empleadoService.empleado;
+          valorUnitario} =
+          this.prodcutoService.producto;
         this.formProducto.setValue({
           nombre, 
           laboratorioFabrica,
@@ -102,42 +83,26 @@ export class ResgistrarComponent implements OnInit {
     }
 
   validarEditarCrear() {
-    this.titulo === 'Editar' ? this.editarEmpleado() : this.registrarProducto();
+    this.titulo === 'Editar' ? this.editarProducto() : this.registrarProducto();
     this.prodcutoService.titulo = 'Registrar';
     this.titulo = this.prodcutoService.titulo;
   }
-  // validarEditarCrear() {
-  //   this.titulo === 'Editar' ? this.editarEmpleado() : this.registrarEmpleado();
-  //   this.empleadoService.titulo = 'Registrar';
-  //   this.titulo = this.empleadoService.titulo;
-  // }
 
-  async registrarEmpleado() {
-    console.log(this.formProducto.value);
-    // const resp: any = await this.empleadoService.registrarEmpleado(
-    //   this.formProducto.value
-    // );
-    // resp.ok
-    //   ? Swal.fire(resp.msg, '', 'success')
-    //   : Swal.fire(resp.msg, '', 'error');
-    // this.router.navigateByUrl('listar');
+  editarProducto(){
+    this.prodcutoService.editarProductos(
+      this.prodcutoService.producto.id || 0, this. formProducto.value).subscribe((res:any) => {
+        this.titulo = 'Registrar';
+    if(res.ok){
+      Swal.fire(res.msg, '', 'success')
+      this.router.navigateByUrl('listar')
+
+    }else{
+      Swal.fire(res.msg, '', 'error');
+
+    }
+      })
+      this.prodcutoService.producto = new Producto();
   }
-  async editarEmpleado() {
-    const resp: any = await this.empleadoService.editarEmpleado(
-      this.empleadoService.empleado.id,
-      this.formProducto.value
-    );
-    this.titulo = 'Registrar';
-    resp.ok
-      ? Swal.fire(resp.msg, '', 'success')
-      : Swal.fire(resp.msg, '', 'error');
-
-   
-  }
-
-   
-
-
 
   // get formulario
   get nombre() {
